@@ -1,38 +1,17 @@
 import * as express from "express"
-
+import {AlumnoResource, ProfesorResource} from "./resources"
 let app : express.Application = express()
+let alumnosResource = new AlumnoResource()
+let profesorResource = new ProfesorResource()
 
-interface Alumno{
-    codigo: string
-    nombre: string
-}
 //Recurso Alumnos
- 
- 
- 
-app.get("/alumnos/:codigo"/*/alumnos/20141175*/, (req /*request*/ ,res /*result*/) => {
-    let alumno : Alumno = {
-        nombre: "20141175" ,
-        codigo: "Nacho"
-    }
-    res.send(alumno)
-})
+app.get("/alumnos/:codigo", alumnosResource.get)
+app.get("/alumnos", alumnosResource.getAll)
 
-app.get("/alumnos", (req,res) => {
-    //Se va a obtener un listado de alumnos
-    let carrera = req.params.carrera
+//Recurso Profecor
+app.get("/profesor/:codigo", profesorResource.get)
+app.get("/profesor", profesorResource.getAll)
 
-    res.send([
-        {
-            codigo: "20142353",
-            nombre: "Porritas"
-        },
-        {
-            codigo: "20143260",
-            nombre: "Renato"
-        }
-    ])
-})
 
 app.listen(3000, () => {
     console.log("Servidor ejecutandose...")
